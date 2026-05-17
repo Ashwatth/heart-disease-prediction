@@ -1,0 +1,25 @@
+# Configuration for Heart Disease Prediction System
+
+data:
+  dataset_path: "data/dataset.csv"
+  test_size: 0.2
+  random_state: 42
+
+model:
+  structure:
+    - ["age", "heartdisease"]
+    - ["gender", "heartdisease"]
+    - ["exang", "heartdisease"]
+    - ["cp", "heartdisease"]
+    - ["heartdisease", "restecg"]
+    - ["heartdisease", "chol"]
+  target: "heartdisease"
+  estimator: "mle"  # Options: "mle" or "bayes"
+  
+  # Bayesian estimator options (used when estimator is "bayes")
+  prior_type: "BDeu"  # Options: "BDeu", "K2", "dirichlet"
+  equivalent_sample_size: 10
+
+logging:
+  level: "INFO"  # Options: DEBUG, INFO, WARNING, ERROR
+  format: "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"

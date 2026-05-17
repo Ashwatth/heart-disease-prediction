@@ -1,0 +1,52 @@
+[tool.poetry]
+name = "heart-disease-prediction"
+version = "0.2.0"
+description = "Bayesian Network-based Heart Disease Prediction System"
+authors = ["Ashwatth <ashwatth@example.com>"]
+readme = "README.md"
+packages = [{include = "heart_disease_prediction"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+numpy = "^1.24.0"
+pandas = "^2.0.0"
+pgmpy = "^0.1.23"
+scikit-learn = "^1.3.0"
+matplotlib = "^3.7.0"
+seaborn = "^0.12.0"
+click = "^8.1.0"
+pyyaml = "^6.0"
+loguru = "^0.7.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.0"
+pytest-cov = "^4.1.0"
+black = "^24.0.0"
+flake8 = "^7.0.0"
+mypy = "^1.8.0"
+ipykernel = "^6.29.0"
+jupyter = "^1.0.0"
+
+[tool.poetry.scripts]
+heart-predict = "heart_disease_prediction.cli:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 100
+target-version = ['py310']
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "--cov=heart_disease_prediction --cov-report=html --cov-report=term-missing"

@@ -1,0 +1,47 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.10
+    commands:
+      - echo "Installing dependencies..."
+      - pip install --upgrade pip
+      - pip install poetry
+      - poetry config virtualenvs.create false
+      - poetry install --no-interaction --no-ansi
+
+  pre_build:
+    commands:
+      - echo "Running linters and formatters..."
+      - poetry run black --check heart_disease_prediction tests
+      - poetry run flake8 heart_disease_prediction tests --max-line-length=100
+
+  build:
+    commands:
+      - echo "Running tests..."
+      - poetry run pytest --cov=heart_disease_prediction --cov-report=xml --cov-report=term-missing
+      - echo "Build completed on `date`"
+
+  post_build:
+    commands:
+      - echo "Creating distribution package..."
+      - poetry build
+      - echo "Build artifacts created"
+
+artifacts:
+  files:
+    - dist/**/*
+    - coverage.xml
+  name: heart-disease-prediction-$(date +%Y%m%d-%H%M%S)
+
+reports:
+  coverage:
+    files:
+      - coverage.xml
+    file-format: COBERTURAXML
+
+cache:
+  paths:
+    - '/root/.cache/pypoetry/**/*'
+    - '/root/.cache/pip/**/*'
